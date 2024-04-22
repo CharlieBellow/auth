@@ -2,17 +2,23 @@ import type { NextAuthConfig, User } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import prisma from './lib/prisma'
 import * as bcrypt from 'bcryptjs'
+import GithubProvider from "next-auth/providers/github"
 
 
 export default {
   providers: [
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENTID!,
+      clientSecret: process.env.GITHUB_SECRET!,
+    }),
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: {},
-        password: {},
+        email: {label: "email", type: "text"},
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials, req) {
+        console.log("authorize", credentials)
         const { email, password } = credentials
         if (email && password) {
           return null
@@ -35,5 +41,20 @@ export default {
       }, 
     }),
   ],
-  pages: { signIn: 'auth/login' },
+  pages: { signIn: '/' },
+  
+
+
+  callbacks: {
+    async jwt({ token, user }) {
+      // Persist the OAuth access_token to the token right after signin
+      user && (token.user = user)
+      return token
+    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token from a provider.
+      
+      return session
+    }
+  }
 } satisfies NextAuthConfig
