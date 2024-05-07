@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { User } from "@prisma/client"
+
 import { Spinner } from "@radix-ui/themes"
 
-import { signIn } from "next-auth/react"
+
 import { useRouter } from "next/navigation"
 import { FormEvent, SyntheticEvent, useState } from 'react'
 export default function Home() {
@@ -19,20 +19,20 @@ export default function Home() {
  async function handleSubmit (event: SyntheticEvent) {
    event.preventDefault()
   //  setIsLoading(true)
-   const res = await signIn<"credentials">("Credentials", {
-     ...data,
-     redirect: false
-     })
+  //  const res = await signIn<"credentials">("Credentials", {
+  //    ...data,
+  //    redirect: false
+  //    })
    
-    if (res?.error) {
-      console.log(res);
-      return
+  //   if (res?.error) {
+  //     console.log(res);
+  //     return
       
-    }
+  //   }
    
-   setTimeout(() => {
-     setIsLoading(false)
-   }, 5000)
+  //  setTimeout(() => {
+  //    setIsLoading(false)
+  //  }, 5000)
   //  setData({email: "", password:""})
     // setIsLoading(false)
     
