@@ -4,10 +4,11 @@ import getServerSession from 'next-auth'
 
 export default async function Dashboard() {
 
-  const session = await getServerSession(authConfig)
-  
+  const session = getServerSession(authConfig)
+console.log(session.auth.name);
+
   return (
-    <div>Helo { session.user.email} -  Dashboard</div>
+    <div>Helo { session?.auth.name} -  Dashboard</div>
 
   )
 }

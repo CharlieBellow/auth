@@ -36,9 +36,11 @@ export default {
       if (!user) {
         throw new Error("User was not found and could not be created.")
       }
+        
 
       return user
       }, 
+      
     }),
   ],
   pages: { signIn: '/' },

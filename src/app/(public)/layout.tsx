@@ -10,6 +10,10 @@ type PrivateLayoutProps = {
 export default async function PrivateLayout({ children }: PrivateLayoutProps) {
   // obtem a sessão do lado do cliente
   const session = await getServerSession({ ...authConfig })
+  
+  if (!session) {
+    redirect('/')
+  }
 
   if (session) {
     redirect('/admin')
